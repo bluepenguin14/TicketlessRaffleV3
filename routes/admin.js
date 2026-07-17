@@ -301,6 +301,109 @@ router.post("/reset",(req,res)=>{
 });
 
 
+// -----------------------------------------------
+// Dashboard statistics
+// -----------------------------------------------
 
+router.get("/stats",(req,res)=>{
+
+
+    try {
+
+
+        const entries =
+            raffleService.getEntries();
+
+
+        const winners =
+            raffleService.getWinners();
+
+
+
+        const totalTickets =
+            entries.reduce(
+
+                (sum,entry)=>
+                    sum + Number(entry.tickets || 0),
+
+                0
+
+            );
+
+
+
+        res.json({
+
+            success:true,
+
+            stats:{
+
+                entrants:
+                    entries.length,
+
+                totalTickets,
+
+                winners:
+                    winners.length
+
+            },
+
+            winnerHistory:
+                winners
+
+        });
+
+
+
+    }
+    catch(error){
+
+
+        res.status(500).json({
+
+            success:false,
+
+            error:error.message
+
+        });
+
+
+    }
+
+
+});
+
+// -----------------------------------------------
+// Default CSV Export
+// -----------------------------------------------
+
+router.get("/export",(req,res)=>{
+
+
+    const data =
+        loadData();
+
+
+    const csv =
+        exportEntrants(
+            data.entries
+        );
+
+
+    res.header(
+        "Content-Type",
+        "text/csv"
+    );
+
+
+    res.attachment(
+        "raffle-entrants.csv"
+    );
+
+
+    res.send(csv);
+
+
+});
 
 module.exports = router;
