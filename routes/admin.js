@@ -17,11 +17,14 @@
 const express = require("express");
 
 const router = express.Router();
-
-
+ 
 const raffleService =
     require("../services/raffleService");
 
+const requireAdmin =
+    require("../middleware/auth");
+
+router.use(requireAdmin);
 
 const {
     exportEntrants,

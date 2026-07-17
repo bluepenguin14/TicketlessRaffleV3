@@ -19,6 +19,25 @@
 // Elements
 // -----------------------------------------------
 
+const loginSection =
+    document.getElementById("loginSection");
+
+
+const dashboardSection =
+    document.getElementById("dashboardSection");
+
+
+const loginButton =
+    document.getElementById("loginButton");
+
+
+const adminPassword =
+    document.getElementById("adminPassword");
+
+
+const loginMessage =
+    document.getElementById("loginMessage");
+
 const entrantCount =
     document.getElementById("entrantCount");
 
@@ -43,7 +62,69 @@ const message =
     document.getElementById("adminMessage");
 
 
+loginButton.addEventListener(
+"click",
 
+async()=>{
+
+
+    const response =
+        await fetch(
+            "/api/auth/login",
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":
+                    "application/json"
+
+                },
+
+                body:
+                JSON.stringify({
+
+                    password:
+                    adminPassword.value
+
+                })
+
+            }
+        );
+
+
+    const result =
+        await response.json();
+
+
+
+    if(result.success){
+
+
+        loginSection.style.display =
+            "none";
+
+
+        dashboardSection.style.display =
+            "block";
+
+
+        loadDashboard();
+
+
+    }
+    else {
+
+
+        loginMessage.textContent =
+            "Invalid password";
+
+
+    }
+
+
+});
 
 
 // -----------------------------------------------

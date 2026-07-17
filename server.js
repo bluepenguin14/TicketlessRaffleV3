@@ -18,10 +18,23 @@ const path = require("path");
 
 const publicRoutes = require("./routes/public");
 const adminRoutes = require("./routes/admin");
-
+const session = require("express-session");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
+app.use(
+    session({
+
+        secret:
+        "change-this-secret",
+
+        resave:false,
+
+        saveUninitialized:false
+
+    })
+);
 
 // -----------------------------
 // Configuration
@@ -56,6 +69,10 @@ app.use("/api", publicRoutes);
 
 app.use("/api/admin", adminRoutes);
 
+app.use(
+    "/api/auth",
+    authRoutes
+);
 
 // -----------------------------
 // Default Route
