@@ -9,6 +9,6 @@
   "dependencies": {
     "csv-stringify": "^6.5.1",
     "express": "^4.19.2",
-    "uuid": "^10.0.0"
+    "uuid": "^14.0.1"
   }
 }
