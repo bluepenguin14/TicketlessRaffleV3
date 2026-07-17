@@ -1,4 +1,12 @@
 {
-  "entries": [],
+  "entries": [
+    {
+      "id": "a61ffec0-febd-4318-b506-9fdf8e134c5a",
+      "name": "John Smith",
+      "email": "",
+      "tickets": 5,
+      "timestamp": "2026-07-17T17:15:19.996Z"
+    }
+  ],
   "winners": []
 }
