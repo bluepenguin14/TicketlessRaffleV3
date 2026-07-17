@@ -1,1 +1,14 @@
-
+{
+  "name": "ticketless-raffle-v3",
+  "version": "3.0.0",
+  "description": "Production-ready ticketless raffle system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "csv-stringify": "^6.5.1",
+    "express": "^4.19.2",
+    "uuid": "^10.0.0"
+  }
+}
