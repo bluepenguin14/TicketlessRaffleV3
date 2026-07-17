@@ -1,26 +1,33 @@
 {
   "entries": [
     {
-      "id": "a61ffec0-febd-4318-b506-9fdf8e134c5a",
-      "name": "John Smith",
+      "id": "79d61d23-e3d8-4255-b92c-1cedd5009cbc",
+      "name": "pw",
       "email": "",
-      "tickets": 5,
-      "timestamp": "2026-07-17T17:15:19.996Z"
+      "tickets": 3,
+      "timestamp": "2026-07-17T22:17:44.274Z"
     },
     {
-      "id": "c124fcfb-0659-4777-976d-b00a24a97d9d",
-      "name": "Paula Weill",
+      "id": "8ec5dff3-6513-4930-a14a-b44fbefde289",
+      "name": "test",
       "email": "",
-      "tickets": 1,
-      "timestamp": "2026-07-17T18:58:06.065Z"
+      "tickets": 40,
+      "timestamp": "2026-07-17T22:17:58.162Z"
+    },
+    {
+      "id": "c763b99f-c3e5-4777-8bbe-88d128767cd7",
+      "name": "pupsa",
+      "email": "ps@gmail.com",
+      "tickets": 100,
+      "timestamp": "2026-07-17T22:22:19.241Z"
+    },
+    {
+      "id": "afc457c7-e980-401a-a687-bface2c5574e",
+      "name": "jp",
+      "email": "",
+      "tickets": 400,
+      "timestamp": "2026-07-17T22:28:45.366Z"
     }
   ],
-  "winners": [
-    {
-      "name": "John Smith",
-      "tickets": 5,
-      "email": "",
-      "date": "2026-07-17T18:58:20.640Z"
-    }
-  ]
+  "winners": []
 }

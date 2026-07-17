@@ -137,8 +137,12 @@ async function loadDashboard(){
     try {
 
 
-        const response =
-            await fetch("/api/admin/stats");
+        const response = await fetch(
+    "/api/admin/stats",
+    {
+        credentials: "include"
+    }
+);
 
 
         const result =
@@ -222,33 +226,29 @@ async()=>{
     try {
 
 
-        const response =
-            await fetch(
-                "/api/admin/add",
-                {
+     const response =
+         await fetch(
+        "/api/admin/add",
+        {
+            method:"POST",
 
-                    method:"POST",
+            credentials:"include",
 
-                    headers:{
+            headers:{
+                "Content-Type":"application/json"
+            },
 
-                        "Content-Type":
-                        "application/json"
+            body:JSON.stringify({
 
-                    },
+                name,
 
-                    body:
-                    JSON.stringify({
+                email,
 
-                        name,
+                tickets
 
-                        email,
-
-                        tickets
-
-                    })
-
-                }
-            );
+            })
+        }
+    );
 
 
 
@@ -265,12 +265,26 @@ async()=>{
             result.error;
 
 
-
         if(result.success){
 
-            loadDashboard();
+    loadDashboard();
 
-        }
+    // Clear manual entrant form
+    document
+    .getElementById("adminName")
+    .value = "";
+
+    document
+    .getElementById("adminEmail")
+    .value = "";
+
+    document
+    .getElementById("adminTickets")
+    .value = "1";
+
+}
+        
+
 
 
 
@@ -318,14 +332,14 @@ async()=>{
 
 
     const response =
-        await fetch(
-            "/api/admin/draw",
-            {
+      await fetch(
+        "/api/admin/draw",
+        {
+            method:"POST",
 
-                method:"POST"
-
-            }
-        );
+            credentials:"include"
+        }
+    );
 
 
 
@@ -389,17 +403,11 @@ document
 
 ()=>{
 
-
-    window.location.href =
+   window.location.href =
         "/api/admin/export";
-
+   
 
 });
-
-
-
-
-
 
 
 
@@ -414,7 +422,6 @@ document
 
 async()=>{
 
-
     if(
         !confirm(
         "Reset this raffle? All entries will be removed."
@@ -426,17 +433,15 @@ async()=>{
     }
 
 
-
-
     const response =
-        await fetch(
-            "/api/admin/reset",
-            {
+    await fetch(
+        "/api/admin/reset",
+        {
+            method:"POST",
 
-                method:"POST"
-
-            }
-        );
+            credentials:"include"
+        }
+    );
 
 
 
@@ -458,7 +463,14 @@ async()=>{
 
     }
 
+// Refresh everything
 
+// Clear manual entry form
+const form = document.getElementById("addEntrantForm");
+
+if (form) {
+    form.reset();
+}
 
 });
 

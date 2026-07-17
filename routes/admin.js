@@ -18,11 +18,12 @@ const express = require("express");
 
 const router = express.Router();
  
+const requireAdmin =
+    require("../middleware/auth");
+ 
 const raffleService =
     require("../services/raffleService");
 
-const requireAdmin =
-    require("../middleware/auth");
 
 router.use(requireAdmin);
 
