@@ -6,7 +6,21 @@
       "email": "",
       "tickets": 5,
       "timestamp": "2026-07-17T17:15:19.996Z"
+    },
+    {
+      "id": "c124fcfb-0659-4777-976d-b00a24a97d9d",
+      "name": "Paula Weill",
+      "email": "",
+      "tickets": 1,
+      "timestamp": "2026-07-17T18:58:06.065Z"
     }
   ],
-  "winners": []
+  "winners": [
+    {
+      "name": "John Smith",
+      "tickets": 5,
+      "email": "",
+      "date": "2026-07-17T18:58:20.640Z"
+    }
+  ]
 }
