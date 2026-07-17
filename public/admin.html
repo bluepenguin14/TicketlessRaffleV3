@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Ticketless Raffle Admin
+    </title>
+
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<header class="header">
+
+    <h1>
+        Ticketless Raffle Admin
+    </h1>
+
+    <h2>
+        Veterans Nonprofit Dashboard
+    </h2>
+
+</header>
+
+
+
+
+
+<!-- Dashboard Stats -->
+
+<section class="card">
+
+
+<h3>
+    Raffle Statistics
+</h3>
+
+
+<p>
+    Entrants:
+    <strong id="entrantCount">
+        0
+    </strong>
+</p>
+
+
+<p>
+    Total Entries:
+    <strong id="totalTickets">
+        0
+    </strong>
+</p>
+
+
+<p>
+    Winners:
+    <strong id="winnerCount">
+        0
+    </strong>
+</p>
+
+
+</section>
+
+
+
+
+
+
+<!-- Admin Actions -->
+
+<section class="card">
+
+
+<h3>
+    Raffle Actions
+</h3>
+
+
+
+<button
+    class="enter-button"
+    id="addEntrantButton">
+
+    Add Entrant
+
+</button>
+
+
+
+
+<button
+    class="enter-button"
+    id="drawButton">
+
+    Draw Winner
+
+</button>
+
+
+
+
+<button
+    class="enter-button"
+    id="exportButton">
+
+    Export CSV
+
+</button>
+
+
+
+
+<button
+    class="enter-button"
+    id="resetButton">
+
+    Reset Raffle
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- Add Entrant Form -->
+
+<section
+class="card"
+id="addEntrantSection">
+
+
+<h3>
+    Add Entrant Manually
+</h3>
+
+
+
+<label>
+    Name
+</label>
+
+
+<input
+    id="adminName"
+    placeholder="Entrant name">
+
+
+
+
+
+<label>
+    Email
+</label>
+
+
+<input
+    id="adminEmail"
+    placeholder="Email (optional)">
+
+
+
+
+
+<label>
+    Number of Entries
+</label>
+
+
+<input
+    id="adminTickets"
+    type="number"
+    value="1"
+    min="1">
+
+
+
+
+
+<button
+class="enter-button"
+id="saveEntrantButton">
+
+Save Entrant
+
+</button>
+
+
+
+<div id="adminMessage"></div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- Winner Display -->
+
+<section class="card">
+
+
+<h3>
+    Latest Winner
+</h3>
+
+
+<div id="winnerDisplay">
+
+No winner drawn yet.
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- Winner History -->
+
+<section class="card">
+
+
+<h3>
+    Winner History
+</h3>
+
+
+<div id="winnerHistory">
+
+No winners yet.
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+</div>
+
+
+
+<script src="/js/admin.js"></script>
+
+
+</body>
+
+</html>
