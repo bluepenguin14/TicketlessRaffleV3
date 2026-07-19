@@ -69,29 +69,31 @@ async()=>{
 
 
     const response =
-        await fetch(
-            "/api/auth/login",
-            {
+    await fetch(
+        "/api/auth/login",
+        {
 
-                method:"POST",
+            method:"POST",
 
-                headers:{
+            credentials:"include",
 
-                    "Content-Type":
-                    "application/json"
+            headers:{
 
-                },
+                "Content-Type":
+                "application/json"
 
-                body:
-                JSON.stringify({
+            },
 
-                    password:
-                    adminPassword.value
+            body:
+            JSON.stringify({
 
-                })
+                password:
+                adminPassword.value
 
-            }
-        );
+            })
+
+        }
+    );
 
 
     const result =
@@ -170,6 +172,7 @@ async function loadDashboard(){
                 result.winnerHistory
             );
 
+            loadEntrants();
 
         }
 
@@ -185,7 +188,75 @@ async function loadDashboard(){
 }
 
 
+// -----------------------------------------------
+// Load Entrants
+// -----------------------------------------------
 
+async function loadEntrants() {
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/entrants",
+            {
+                credentials: "include"
+            }
+        );
+
+        const result = await response.json();
+
+        if (!result.success) return;
+
+        const tableBody =
+            document.getElementById("entrantTableBody");
+
+        tableBody.innerHTML = "";
+
+        result.entrants.forEach(entrant => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+
+    <td>${entrant.name}</td>
+
+    <td>${entrant.email || ""}</td>
+
+    <td>${entrant.tickets}</td>
+
+    <td>${new Date(entrant.timestamp).toLocaleString()}</td>
+
+    <td>
+        <button
+            class="editButton"
+            data-id="${entrant.id}">
+            ✏️
+        </button>
+    </td>
+
+    <td>
+        <button
+            class="deleteButton"
+            data-id="${entrant.id}">
+            🗑
+        </button>
+    </td>
+
+`;
+
+            tableBody.appendChild(row);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
 
 
 
@@ -268,6 +339,8 @@ async()=>{
         if(result.success){
 
     loadDashboard();
+
+    loadEntrants();
 
     // Clear manual entrant form
     document
@@ -460,6 +533,7 @@ async()=>{
 
         loadDashboard();
 
+        loadEntrants();
 
     }
 
@@ -527,8 +601,3 @@ function displayWinners(winners){
 
 
 
-
-
-// Initial load
-
-loadDashboard();

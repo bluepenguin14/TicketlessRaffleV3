@@ -19,6 +19,7 @@ const path = require("path");
 const publicRoutes = require("./routes/public");
 const adminRoutes = require("./routes/admin");
 const session = require("express-session");
+const crypto = require("crypto");
 const authRoutes = require("./routes/auth");
 
 const app = express();
@@ -27,11 +28,18 @@ app.use(
     session({
 
         secret:
-        "change-this-secret",
+            process.env.SESSION_SECRET ||
+            crypto.randomBytes(32).toString("hex"),
 
         resave:false,
 
-        saveUninitialized:false
+        saveUninitialized:false,
+
+        cookie:{
+            httpOnly:true,
+            sameSite:"lax",
+            secure:false
+        }
 
     })
 );

@@ -35,11 +35,9 @@ const {
 
 
 const {
-    loadData
-
+    loadData,
+    saveData
 } = require("../services/storage");
-
-
 
 
 
@@ -377,6 +375,38 @@ router.get("/stats",(req,res)=>{
 });
 
 // -----------------------------------------------
+// Get All Entrants
+// -----------------------------------------------
+
+router.get("/entrants", (req, res) => {
+
+    try {
+
+        const data = loadData();
+
+        res.json({
+
+            success: true,
+
+            entrants: data.entries
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+
+            error: error.message
+
+        });
+
+    }
+
+});
+
+// -----------------------------------------------
 // Default CSV Export
 // -----------------------------------------------
 
@@ -406,6 +436,105 @@ router.get("/export",(req,res)=>{
 
     res.send(csv);
 
+
+});
+
+// -----------------------------------------------
+// Update Entrant
+// -----------------------------------------------
+
+router.put("/entrant/:id", (req, res) => {
+
+    try {
+
+        const data = loadData();
+
+        const entrant = data.entries.find(
+            e => e.id === req.params.id
+        );
+
+        if (!entrant) {
+
+            return res.status(404).json({
+
+                success: false,
+                error: "Entrant not found"
+
+            });
+
+        }
+
+        entrant.name = req.body.name.trim();
+        entrant.email = (req.body.email || "").trim();
+        entrant.tickets = Number(req.body.tickets);
+
+        saveData(data);
+
+        res.json({
+
+            success: true,
+            entrant
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            error: error.message
+
+        });
+
+    }
+
+});
+
+// -----------------------------------------------
+// Delete Entrant
+// -----------------------------------------------
+
+router.delete("/entrant/:id", (req, res) => {
+
+    try {
+
+        const data = loadData();
+
+        const index = data.entries.findIndex(
+            e => e.id === req.params.id
+        );
+
+        if (index === -1) {
+
+            return res.status(404).json({
+
+                success: false,
+                error: "Entrant not found"
+
+            });
+
+        }
+
+        data.entries.splice(index, 1);
+
+        saveData(data);
+
+        res.json({
+
+            success: true
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            error: error.message
+
+        });
+
+    }
 
 });
 
