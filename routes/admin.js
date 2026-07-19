@@ -24,7 +24,6 @@ const requireAdmin =
 const raffleService =
     require("../services/raffleService");
 
-
 router.use(requireAdmin);
 
 const {
