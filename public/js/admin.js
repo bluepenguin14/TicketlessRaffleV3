@@ -581,6 +581,12 @@ function renderEntrants(entrants) {
 
         tableBody.appendChild(row);
 
+row.querySelector(".editButton")
+    .addEventListener(
+        "click",
+        () => openEditModal(entrant)
+    );
+
         row.querySelector(".deleteButton")
     .addEventListener(
 
@@ -593,6 +599,7 @@ function renderEntrants(entrants) {
     });
 
 }
+
 
 
 // -----------------------------------------------
@@ -681,6 +688,107 @@ async function deleteEntrant(id) {
 }
 
 // -----------------------------------------------
+// Open Edit Modal
+// -----------------------------------------------
+
+function openEditModal(entrant) {
+
+    document.getElementById("editId").value =
+        entrant.id;
+
+    document.getElementById("editName").value =
+        entrant.name;
+
+    document.getElementById("editEmail").value =
+        entrant.email || "";
+
+    document.getElementById("editTickets").value =
+        entrant.tickets;
+
+    document.getElementById("editModal").style.display =
+        "block";
+
+}
+
+// -----------------------------------------------
+// Save Edited Entrant
+// -----------------------------------------------
+
+async function saveEditedEntrant() {
+
+    const id =
+        document.getElementById("editId").value;
+
+    const name =
+        document.getElementById("editName").value.trim();
+
+    const email =
+        document.getElementById("editEmail").value.trim();
+
+    const tickets =
+        Number(
+            document.getElementById("editTickets").value
+        );
+
+    try {
+
+        const response = await fetch(
+
+            `/api/admin/entrant/${id}`,
+
+            {
+
+                method: "PUT",
+
+                credentials: "include",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    name,
+                    email,
+                    tickets
+
+                })
+
+            }
+
+        );
+
+        const result =
+            await response.json();
+
+        if (!result.success) {
+
+            alert(result.error);
+            return;
+
+        }
+
+        document.getElementById("editModal").style.display =
+            "none";
+
+        await loadDashboard();
+        await loadEntrants();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert("Unable to update entrant.");
+
+    }
+
+}
+
+// -----------------------------------------------
 // Display Winners
 // -----------------------------------------------
 
@@ -731,6 +839,31 @@ function displayWinners(winners){
 searchEntrants.addEventListener(
     "input",
     filterEntrants
+);
+
+document
+.getElementById("cancelEditButton")
+.addEventListener(
+
+    "click",
+
+    () => {
+
+        document.getElementById("editModal").style.display =
+            "none";
+
+    }
+
+);
+
+document
+.getElementById("saveEditButton")
+.addEventListener(
+
+    "click",
+
+    saveEditedEntrant
+
 );
 
 loadDashboard();
