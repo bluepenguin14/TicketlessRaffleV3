@@ -1,13 +1,6 @@
 {
   "entries": [
     {
-      "id": "6c64c9ad-4d60-480b-8066-3491a2a0942f",
-      "name": "Paula",
-      "email": "",
-      "tickets": 100,
-      "timestamp": "2026-07-19T15:36:13.320Z"
-    },
-    {
       "id": "c52adbde-a9d3-4fec-9240-5d0fd2f517f9",
       "name": "Joe",
       "email": "",
@@ -48,13 +41,6 @@
       "email": "",
       "tickets": 111,
       "timestamp": "2026-07-20T01:49:43.269Z"
-    },
-    {
-      "id": "c28b666b-b962-4199-817a-312793cfc187",
-      "name": "Johnny Appleseed",
-      "email": "",
-      "tickets": 1,
-      "timestamp": "2026-07-20T01:49:53.681Z"
     },
     {
       "id": "3a4a1cff-e658-4aa2-9779-7cc3b3b9c51e",

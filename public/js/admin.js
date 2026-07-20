@@ -581,6 +581,15 @@ function renderEntrants(entrants) {
 
         tableBody.appendChild(row);
 
+        row.querySelector(".deleteButton")
+    .addEventListener(
+
+        "click",
+
+        () => deleteEntrant(entrant.id)
+
+    );
+
     });
 
 }
@@ -616,6 +625,60 @@ function filterEntrants() {
 
 }
 
+
+// -----------------------------------------------
+// Delete Entrant
+// -----------------------------------------------
+
+async function deleteEntrant(id) {
+
+    const entrant = allEntrants.find(e => e.id === id);
+
+    if (!entrant) return;
+
+    if (
+        !confirm(
+            `Delete "${entrant.name}"?\n\nThis action cannot be undone.`
+        )
+    ) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+
+            `/api/admin/entrant/${id}`,
+
+            {
+                method: "DELETE",
+                credentials: "include"
+            }
+
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            alert(result.error);
+            return;
+
+        }
+
+        await loadDashboard();
+        await loadEntrants();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+        alert("Unable to delete entrant.");
+
+    }
+
+}
 
 // -----------------------------------------------
 // Display Winners
