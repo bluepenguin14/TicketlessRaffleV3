@@ -62,6 +62,12 @@ const message =
     document.getElementById("adminMessage");
 
 
+const searchEntrants =
+    document.getElementById("searchEntrants");
+
+
+let allEntrants = [];
+
 loginButton.addEventListener(
 "click",
 
@@ -192,6 +198,10 @@ async function loadDashboard(){
 // Load Entrants
 // -----------------------------------------------
 
+// -----------------------------------------------
+// Load Entrants
+// -----------------------------------------------
+
 async function loadEntrants() {
 
     try {
@@ -205,48 +215,17 @@ async function loadEntrants() {
 
         const result = await response.json();
 
-        if (!result.success) return;
+        if (!result.success) {
 
-        const tableBody =
-            document.getElementById("entrantTableBody");
+            return;
 
-        tableBody.innerHTML = "";
+        }
 
-        result.entrants.forEach(entrant => {
+        // Save all entrants for searching/sorting
+        allEntrants = result.entrants;
 
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-
-    <td>${entrant.name}</td>
-
-    <td>${entrant.email || ""}</td>
-
-    <td>${entrant.tickets}</td>
-
-    <td>${new Date(entrant.timestamp).toLocaleString()}</td>
-
-    <td>
-        <button
-            class="editButton"
-            data-id="${entrant.id}">
-            ✏️
-        </button>
-    </td>
-
-    <td>
-        <button
-            class="deleteButton"
-            data-id="${entrant.id}">
-            🗑
-        </button>
-    </td>
-
-`;
-
-            tableBody.appendChild(row);
-
-        });
+        // Display them
+        renderEntrants(allEntrants);
 
     }
 
@@ -257,7 +236,6 @@ async function loadEntrants() {
     }
 
 }
-
 
 
 
@@ -551,8 +529,92 @@ if (form) {
 
 
 
+// -----------------------------------------------
+// Render Entrants
+// -----------------------------------------------
+
+function renderEntrants(entrants) {
+
+    const tableBody =
+        document.getElementById("entrantTableBody");
+
+    tableBody.innerHTML = "";
+
+    entrants.forEach(entrant => {
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${entrant.name}</td>
+
+            <td>${entrant.email || ""}</td>
+
+            <td>${entrant.tickets}</td>
+
+            <td>${new Date(
+                entrant.timestamp
+            ).toLocaleString()}</td>
+
+            <td>
+
+                <button
+                    class="editButton"
+                    data-id="${entrant.id}">
+                    ✏️
+                </button>
+
+            </td>
+
+            <td>
+
+                <button
+                    class="deleteButton"
+                    data-id="${entrant.id}">
+                    🗑
+                </button>
+
+            </td>
+
+        `;
+
+        tableBody.appendChild(row);
+
+    });
+
+}
 
 
+// -----------------------------------------------
+// Search Entrants
+// -----------------------------------------------
+
+function filterEntrants() {
+
+    const search =
+        searchEntrants.value
+        .toLowerCase()
+        .trim();
+
+    const filtered =
+        allEntrants.filter(entrant =>
+
+            entrant.name
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            (entrant.email || "")
+                .toLowerCase()
+                .includes(search)
+
+        );
+
+    renderEntrants(filtered);
+
+}
 
 
 // -----------------------------------------------
@@ -599,5 +661,16 @@ function displayWinners(winners){
 
 }
 
+// -----------------------------------------------
+// Startup
+// -----------------------------------------------
+
+searchEntrants.addEventListener(
+    "input",
+    filterEntrants
+);
+
+loadDashboard();
+loadEntrants();
 
 
