@@ -639,17 +639,15 @@ function filterEntrants() {
 
 async function deleteEntrant(id) {
 
-    const entrant = allEntrants.find(e => e.id === id);
+    const confirmed = confirm(
+        "Are you sure you want to delete this entrant?"
+    );
 
-    if (!entrant) return;
-
-    if (
-        !confirm(
-            `Delete "${entrant.name}"?\n\nThis action cannot be undone.`
-        )
-    ) {
+    if (!confirmed) {
         return;
     }
+
+    // existing delete code continues here...
 
     try {
 
