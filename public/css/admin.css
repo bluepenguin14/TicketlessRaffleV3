@@ -581,3 +581,76 @@ footer {
     }
 
 }
+
+/* ==========================================
+   Winner History
+========================================== */
+
+.winner-history-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 12px 10px;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.winner-history-row:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.winner-number {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 36px;
+
+    height: 36px;
+
+    border-radius: 50%;
+
+    background: #e9eef5;
+
+    font-weight: bold;
+
+}
+
+
+.winner-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.winner-info strong {
+
+    font-size: 17px;
+
+}
+
+
+.winner-info span {
+
+    font-size: 14px;
+
+    color: #666;
+
+}

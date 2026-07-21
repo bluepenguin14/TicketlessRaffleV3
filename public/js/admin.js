@@ -817,7 +817,6 @@ async function saveEditedEntrant() {
 
 function displayWinners(winners){
 
-
     if(
         !winners ||
         winners.length === 0
@@ -831,22 +830,33 @@ function displayWinners(winners){
     }
 
 
-
     winnerHistory.innerHTML =
 
         winners
         .map(
 
-            winner =>
+            (winner, index) =>
 
             `
-            <p>
-            <strong>
-            ${winner.name}
-            </strong>
-            <br>
-            ${winner.date || ""}
-            </p>
+            <div class="winner-history-row">
+
+                <div class="winner-number">
+                    ${index + 1}
+                </div>
+
+                <div class="winner-info">
+
+                    <strong>
+                        ${winner.name}
+                    </strong>
+
+                    <span>
+                        ${winner.date || ""}
+                    </span>
+
+                </div>
+
+            </div>
             `
 
         )
