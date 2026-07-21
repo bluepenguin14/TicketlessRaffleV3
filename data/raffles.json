@@ -127,5 +127,18 @@
       "timestamp": "2026-07-21T15:45:34.159Z"
     }
   ],
-  "winners": []
+  "winners": [
+    {
+      "name": "James Brown",
+      "tickets": 1000,
+      "email": "",
+      "date": "2026-07-21T20:12:40.511Z"
+    },
+    {
+      "name": "pweill",
+      "tickets": 1444,
+      "email": "",
+      "date": "2026-07-21T20:12:50.230Z"
+    }
+  ]
 }

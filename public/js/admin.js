@@ -351,12 +351,6 @@ await loadEntrants();
 });
 
 
-
-
-
-
-
-
 // -----------------------------------------------
 // Draw Winner
 // -----------------------------------------------
@@ -368,7 +362,6 @@ document
 
 async()=>{
 
-
     if(
         !confirm(
         "Draw a winner now?"
@@ -379,67 +372,99 @@ async()=>{
 
     }
 
+    const drawButton =
+        document.getElementById("drawButton");
 
 
+    // Prevent double-clicks
+    drawButton.disabled = true;
 
-    const response =
-      await fetch(
-        "/api/admin/draw",
-        {
-            method:"POST",
+    drawButton.textContent =
+        "Drawing...";
 
-            credentials:"include"
+
+    winnerDisplay.textContent =
+        "Drawing winner...";
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/api/admin/draw",
+                {
+                    method:"POST",
+
+                    credentials:"include"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if(result.success){
+
+
+            winnerDisplay.innerHTML =
+
+            `
+            <h2>
+                ${result.winner.name}
+            </h2>
+
+            <p>
+                Winning Entries:
+                ${result.winner.tickets}
+            </p>
+            `;
+
+
+            await loadDashboard();
+
+
         }
-    );
+
+        else {
 
 
-
-    const result =
-        await response.json();
-
+            winnerDisplay.textContent =
+                result.error;
 
 
-
-    if(result.success){
-
-
-        winnerDisplay.innerHTML =
-
-        `
-        <h2>
-        ${result.winner.name}
-        </h2>
-
-        <p>
-        Winning Entries:
-        ${result.winner.tickets}
-        </p>
-        `;
-
-
-
-        loadDashboard();
+        }
 
 
     }
 
-    else {
+    catch(error){
+
+
+        console.error(error);
 
 
         winnerDisplay.textContent =
-            result.error;
+            "Unable to draw winner. Please try again.";
 
 
     }
 
 
+    finally {
+
+
+        drawButton.disabled = false;
+
+
+        drawButton.textContent =
+            "Draw Winner";
+
+
+    }
 
 });
-
-
-
-
-
 
 
 
