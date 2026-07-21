@@ -1,0 +1,522 @@
+/*
+=================================================
+ Ticketless Raffle v3.2
+ Professional Admin Dashboard
+=================================================
+*/
+
+/* Reset */
+
+*{
+    box-sizing:border-box;
+}
+
+/* Body */
+
+body{
+
+    margin:0;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#eef2f7;
+
+    color:#243447;
+
+    line-height:1.5;
+
+}
+
+/* Main Container */
+
+.container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.header{
+
+    background:#12355B;
+
+    color:white;
+
+    padding:30px;
+
+    border-radius:16px;
+
+    margin-bottom:25px;
+
+    text-align:center;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.15);
+
+}
+
+.header h1{
+
+    margin:0;
+
+    font-size:2.2rem;
+
+    letter-spacing:.5px;
+
+}
+
+.header h2{
+
+    margin-top:8px;
+
+    font-weight:400;
+
+    color:#dbe7f5;
+
+}
+
+
+/* ==========================================
+   Cards
+========================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:24px;
+
+    margin-bottom:24px;
+
+    box-shadow:
+
+        0 6px 16px
+
+        rgba(0,0,0,.08);
+
+    transition:
+
+        transform .2s,
+
+        box-shadow .2s;
+
+}
+
+.card:hover{
+
+    transform:
+
+        translateY(-2px);
+
+    box-shadow:
+
+        0 10px 22px
+
+        rgba(0,0,0,.12);
+
+}
+
+
+/* -----------------------------------------------
+   Form
+------------------------------------------------ */
+
+label {
+
+    display: block;
+
+    margin-top: 15px;
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+}
+
+
+
+input{
+
+    width:100%;
+
+    padding:12px 14px;
+
+    border:1px solid #cfd8e3;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    transition:.2s;
+
+}
+
+input:focus{
+
+    outline:none;
+
+    border-color:#2D6CDF;
+
+    box-shadow:
+
+        0 0 0 4px
+
+        rgba(45,108,223,.15);
+
+}
+
+
+
+
+
+/* -----------------------------------------------
+   Ticket Controls
+------------------------------------------------ */
+
+.ticket-control {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin: 20px 0;
+
+}
+
+
+
+.ticket-control button {
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+}
+
+
+
+#ticketCount {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+}
+
+
+
+
+
+/* -----------------------------------------------
+   Enter Button
+------------------------------------------------ */
+
+.enter-button{
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2D6CDF;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.enter-button:hover{
+
+    background:#1e57ba;
+
+    transform:translateY(-1px);
+
+}
+
+
+
+
+/* -----------------------------------------------
+   Messages
+------------------------------------------------ */
+
+#message {
+
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+
+}
+
+
+
+.success {
+
+    color:
+        green;
+
+}
+
+
+
+.error {
+
+    color:
+        red;
+
+}
+
+
+
+
+
+/* -----------------------------------------------
+   Statistics
+------------------------------------------------ */
+
+.stats {
+
+    text-align: center;
+
+}
+
+
+.stats p {
+
+    font-size: 18px;
+
+}
+
+
+
+/* -----------------------------------------------
+   Footer
+------------------------------------------------ */
+
+footer {
+
+    text-align: center;
+
+    padding: 20px;
+
+    font-size: 14px;
+
+    color:
+        #555;
+
+}
+
+
+
+
+/* -----------------------------------------------
+   Larger Screens
+------------------------------------------------ */
+
+@media(min-width:700px){
+
+
+    .container {
+
+        padding-top:40px;
+
+    }
+
+
+}
+
+/* ==========================================
+   Statistics Cards
+========================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    margin-top:20px;
+
+}
+
+.stat-card{
+
+    background:#f8fbff;
+
+    border-top:6px solid #2D6CDF;
+
+    border-radius:12px;
+
+    padding:24px;
+
+    text-align:center;
+
+    transition:.2s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.stat-title{
+
+    font-size:15px;
+
+    color:#666;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+}
+
+.stat-number{
+
+    font-size:44px;
+
+    font-weight:700;
+
+    color:#12355B;
+
+}
+
+/* ==========================================
+   Quick Action Buttons
+========================================== */
+
+.action-button{
+
+    width:100%;
+
+    margin:10px 0;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.action-button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 6px 14px rgba(0,0,0,.15);
+
+}
+
+/* Add */
+
+.action-add{
+
+    background:#2E8B57;
+
+}
+
+.action-add:hover{
+
+    background:#257347;
+
+}
+
+/* Draw */
+
+.action-draw{
+
+    background:#2D6CDF;
+
+}
+
+.action-draw:hover{
+
+    background:#1F57B5;
+
+}
+
+/* Export */
+
+.action-export{
+
+    background:#6C5CE7;
+
+}
+
+.action-export:hover{
+
+    background:#5648C5;
+
+}
+
+/* Reset */
+
+.action-reset{
+
+    background:#E67E22;
+
+}
+
+.action-reset:hover{
+
+    background:#CC6D18;
+
+}

@@ -12,7 +12,7 @@
     </title>
 
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
 
 </head>
 
@@ -77,38 +77,61 @@
 
 <section class="card">
 
+<h3>Raffle Statistics</h3>
 
-<h3>
-    Raffle Statistics
-</h3>
+<div class="stats-grid">
 
+    <div class="stat-card">
 
-<p>
-    Entrants:
-    <strong id="entrantCount">
-        0
-    </strong>
-</p>
+        <div class="stat-title">
+            Entrants
+        </div>
 
+        <div
+            class="stat-number"
+            id="entrantCount">
 
-<p>
-    Total Entries:
-    <strong id="totalTickets">
-        0
-    </strong>
-</p>
+            0
 
+        </div>
 
-<p>
-    Winners:
-    <strong id="winnerCount">
-        0
-    </strong>
-</p>
+    </div>
 
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Total Entries
+        </div>
+
+        <div
+            class="stat-number"
+            id="totalTickets">
+
+            0
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Winners
+        </div>
+
+        <div
+            class="stat-number"
+            id="winnerCount">
+
+            0
+
+        </div>
+
+    </div>
+
+</div>
 
 </section>
-
 
 
 
@@ -124,45 +147,35 @@
 </h3>
 
 
-
 <button
-    class="enter-button"
+    class="action-button action-add"
     id="addEntrantButton">
 
-    Add Entrant
+    ➕ Add Entrant
 
 </button>
 
-<p id="adminMessage"></p>
-
-
 <button
-    class="enter-button"
+    class="action-button action-draw"
     id="drawButton">
 
-    Draw Winner
+    🎉 Draw Winner
 
 </button>
 
-
-
-
 <button
-    class="enter-button"
+    class="action-button action-export"
     id="exportButton">
 
-    Export CSV
+    📄 Export CSV
 
 </button>
 
-
-
-
 <button
-    class="enter-button"
+    class="action-button action-reset"
     id="resetButton">
 
-    Reset Raffle
+    🔄 Reset Raffle
 
 </button>
 
@@ -235,9 +248,11 @@ Save Entrant
 
 </button>
 
+<p id="adminMessage"></p>
+
 </form>
 
-</section
+</section>
 
 
 

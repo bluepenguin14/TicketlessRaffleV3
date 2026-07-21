@@ -118,7 +118,10 @@ async()=>{
             "block";
 
 
-        loadDashboard();
+            await loadDashboard();
+
+            await loadEntrants();
+
 
 
     }
@@ -178,7 +181,7 @@ async function loadDashboard(){
                 result.winnerHistory
             );
 
-            loadEntrants();
+            
 
         }
 
@@ -198,11 +201,8 @@ async function loadDashboard(){
 // Load Entrants
 // -----------------------------------------------
 
-// -----------------------------------------------
-// Load Entrants
-// -----------------------------------------------
-
 async function loadEntrants() {
+
 
     try {
 
@@ -231,16 +231,16 @@ async function loadEntrants() {
 
     catch (error) {
 
-        console.error(error);
+    console.error("loadEntrants error:", error);
 
-    }
+}
 
 }
 
 
 
 // -----------------------------------------------
-// Add Entrant
+// Save/Add Entrant
 // -----------------------------------------------
 
 document
@@ -250,7 +250,7 @@ document
 
 async()=>{
 
-
+	
     const name =
         document
         .getElementById("adminName")
@@ -316,9 +316,9 @@ async()=>{
 
         if(result.success){
 
-    loadDashboard();
+await loadDashboard();
 
-    loadEntrants();
+await loadEntrants();
 
     // Clear manual entrant form
     document
@@ -866,7 +866,5 @@ document
 
 );
 
-loadDashboard();
-loadEntrants();
 
 
