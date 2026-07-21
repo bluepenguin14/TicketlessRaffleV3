@@ -520,3 +520,64 @@ footer {
     background:#CC6D18;
 
 }
+
+/* ==========================================
+   Responsive Entrant Table
+========================================== */
+
+#entrantTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    min-width: 700px;
+}
+
+#entrantTable th,
+#entrantTable td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#entrantTable th {
+    font-weight: bold;
+    background: #f1f4f7;
+}
+
+#entrantTable tr:hover {
+    background: #f8fafc;
+}
+
+/* Allow table to scroll on smaller screens */
+
+.card:has(#entrantTable) {
+    overflow-x: auto;
+}
+
+/* Keep action buttons easy to tap */
+
+#entrantTable .editButton,
+#entrantTable .deleteButton {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 700px) {
+
+    #entrantTable {
+        min-width: 650px;
+    }
+
+    #entrantTable th,
+    #entrantTable td {
+        padding: 14px 10px;
+    }
+
+}
