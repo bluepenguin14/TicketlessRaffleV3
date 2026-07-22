@@ -16,7 +16,7 @@
     },
     {
       "id": "6f48d116-e168-4e10-b937-9200a844f296",
-      "name": "pickME",
+      "name": "PickME",
       "email": "",
       "tickets": 1,
       "timestamp": "2026-07-20T01:43:51.991Z"
@@ -111,13 +111,6 @@
       "email": "",
       "tickets": 1,
       "timestamp": "2026-07-21T04:07:05.897Z"
-    },
-    {
-      "id": "f18efccb-4507-4ae8-8f41-ad1eec7f6e04",
-      "name": "aribba",
-      "email": "",
-      "tickets": 1,
-      "timestamp": "2026-07-21T04:09:58.330Z"
     },
     {
       "id": "c264dd05-0129-43e2-b129-cb58062eb2ed",
