@@ -58,6 +58,42 @@
 
 </div>
 
+<!-- ==========================================
+     QR Code Generator
+========================================== -->
+
+<section class="card qr-card">
+
+    <h3>
+        📱 Raffle Entry QR Code
+    </h3>
+
+    <p>
+        Scan this QR code to enter the raffle.
+    </p>
+
+    <div
+        id="qrCode"
+        class="qr-code">
+    </div>
+
+    <p
+        id="qrUrl"
+        class="qr-url">
+        https://veterans-day.onrender.com
+    </p>
+
+    <button
+        id="downloadQrButton"
+        class="enter-button"
+        type="button">
+
+        ⬇️ Download QR Code
+
+    </button>
+
+</section>
+
 <!-- Admin Login -->
 
 <section class="card" id="loginSection">
@@ -399,6 +435,10 @@ No winners yet.
 </div>
 
 </div>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+</script>
 
 <script src="/js/admin.js"></script>
 

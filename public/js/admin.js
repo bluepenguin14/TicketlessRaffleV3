@@ -1132,4 +1132,102 @@ largeTextButton.addEventListener(
 
 );
 
+// -----------------------------------------------
+// QR Code Generator
+// -----------------------------------------------
+
+const raffleUrl =
+    "https://veterans-day.onrender.com";
+
+
+const qrCodeContainer =
+    document.getElementById(
+        "qrCode"
+    );
+
+
+const downloadQrButton =
+    document.getElementById(
+        "downloadQrButton"
+    );
+
+
+// Generate QR Code
+
+if(qrCodeContainer){
+
+    new QRCode(
+        qrCodeContainer,
+        {
+            text: raffleUrl,
+
+            width: 250,
+
+            height: 250,
+
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
+    );
+
+}
+
+
+// Download QR Code
+
+if(downloadQrButton){
+
+    downloadQrButton.addEventListener(
+        "click",
+
+        () => {
+
+            const qrImage =
+                qrCodeContainer
+                .querySelector("img");
+
+
+            if(!qrImage){
+
+                alert(
+                    "QR code is not ready yet."
+                );
+
+                return;
+
+            }
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                qrImage.src;
+
+
+            link.download =
+                "ticketless-raffle-qr-code.png";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
+
+        }
+
+    );
+
+}
+
 

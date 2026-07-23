@@ -905,3 +905,70 @@ body.large-text .display-controls button {
     padding: 15px 22px;
 
 }
+
+/* ==========================================
+   QR Code Generator
+========================================== */
+
+.qr-card {
+
+    text-align: center;
+
+}
+
+
+.qr-code {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin: 20px auto;
+
+    padding: 15px;
+
+    background: white;
+
+    width: fit-content;
+
+    border-radius: 8px;
+
+}
+
+
+.qr-code img {
+
+    display: block;
+
+}
+
+
+.qr-url {
+
+    font-size: 14px;
+
+    color: #666;
+
+    word-break: break-all;
+
+    margin: 15px 0;
+
+}
+
+
+body.dark-mode .qr-url {
+
+    color: #cccccc;
+
+}
+
+
+#downloadQrButton {
+
+    max-width: 350px;
+
+    margin: 10px auto;
+
+}
