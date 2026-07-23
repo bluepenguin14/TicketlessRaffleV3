@@ -487,6 +487,7 @@ document
 
 
 
+
 // -----------------------------------------------
 // Reset Raffle
 // -----------------------------------------------
@@ -498,9 +499,15 @@ document
 
 async()=>{
 
+    // First confirmation
+
     if(
         !confirm(
-        "Reset this raffle? All entries will be removed."
+        "WARNING:\n\n" +
+        "This will remove ALL current entrants " +
+        "from the active raffle.\n\n" +
+        "Winner history will NOT be deleted.\n\n" +
+        "Do you want to continue?"
         )
     ){
 
@@ -509,49 +516,113 @@ async()=>{
     }
 
 
-    const response =
-    await fetch(
-        "/api/admin/reset",
-        {
-            method:"POST",
+    // Second confirmation
 
-            credentials:"include"
-        }
-    );
-
-
-
-    const result =
-        await response.json();
-
-
-
-    if(result.success){
-
-
-        alert(
-            "Raffle reset complete."
+    const confirmation =
+        prompt(
+            'To confirm the reset, type "RESET" below. MUST be in ALL CAPS!'
         );
 
 
-        loadDashboard();
+    if(
+        confirmation !== "RESET"
+    ){
 
-        loadEntrants();
+        alert(
+            "Reset cancelled."
+        );
+
+        return;
 
     }
 
-// Refresh everything
 
-// Clear manual entry form
-const form = document.getElementById("addEntrantForm");
+    const resetButton =
+        document.getElementById("resetButton");
 
-if (form) {
-    form.reset();
-}
+
+    // Prevent double-clicks
+
+    resetButton.disabled = true;
+
+    resetButton.textContent =
+        "Resetting...";
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/api/admin/reset",
+                {
+                    method:"POST",
+
+                    credentials:"include"
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if(result.success){
+
+
+            alert(
+                "Raffle reset complete."
+            );
+
+
+            await loadDashboard();
+
+            await loadEntrants();
+
+
+        }
+
+        else {
+
+
+            alert(
+                result.error ||
+                "Unable to reset raffle."
+            );
+
+
+        }
+
+
+    }
+
+    catch(error){
+
+
+        console.error(error);
+
+
+        alert(
+            "Unable to reset raffle. Please try again."
+        );
+
+
+    }
+
+
+    finally {
+
+
+        resetButton.disabled = false;
+
+
+        resetButton.textContent =
+            "Reset Raffle";
+
+
+    }
 
 });
-
-
 
 
 // -----------------------------------------------
@@ -899,5 +970,166 @@ document
 
 );
 
+// -----------------------------------------------
+// Dark Mode
+// -----------------------------------------------
+
+const darkModeButton =
+    document.getElementById(
+        "darkModeButton"
+    );
+
+
+function updateDarkModeButton(){
+
+    if(
+        document.body.classList.contains(
+            "dark-mode"
+        )
+    ){
+
+        darkModeButton.textContent =
+            "☀️ Light Mode";
+
+    }
+
+    else {
+
+        darkModeButton.textContent =
+            "🌙 Dark Mode";
+
+    }
+
+}
+
+
+// Load saved Dark Mode preference
+
+if(
+    localStorage.getItem(
+        "darkMode"
+    ) === "true"
+){
+
+    document.body.classList.add(
+        "dark-mode"
+    );
+
+}
+
+
+updateDarkModeButton();
+
+
+// Toggle Dark Mode
+
+darkModeButton.addEventListener(
+    "click",
+
+    () => {
+
+        document.body.classList.toggle(
+            "dark-mode"
+        );
+
+
+        const isDarkMode =
+            document.body.classList.contains(
+                "dark-mode"
+            );
+
+
+        localStorage.setItem(
+            "darkMode",
+            isDarkMode
+        );
+
+
+        updateDarkModeButton();
+
+    }
+
+);
+
+// -----------------------------------------------
+// Large Text Mode
+// -----------------------------------------------
+
+const largeTextButton =
+    document.getElementById(
+        "largeTextButton"
+    );
+
+
+function updateLargeTextButton(){
+
+    if(
+        document.body.classList.contains(
+            "large-text"
+        )
+    ){
+
+        largeTextButton.textContent =
+            "🔤 Normal Text";
+
+    }
+
+    else {
+
+        largeTextButton.textContent =
+            "🔠 Large Text";
+
+    }
+
+}
+
+
+// Load saved Large Text preference
+
+if(
+    localStorage.getItem(
+        "largeText"
+    ) === "true"
+){
+
+    document.body.classList.add(
+        "large-text"
+    );
+
+}
+
+
+updateLargeTextButton();
+
+
+// Toggle Large Text Mode
+
+largeTextButton.addEventListener(
+    "click",
+
+    () => {
+
+        document.body.classList.toggle(
+            "large-text"
+        );
+
+
+        const isLargeText =
+            document.body.classList.contains(
+                "large-text"
+            );
+
+
+        localStorage.setItem(
+            "largeText",
+            isLargeText
+        );
+
+
+        updateLargeTextButton();
+
+    }
+
+);
 
 

@@ -654,3 +654,254 @@ footer {
     color: #666;
 
 }
+
+/* ==========================================
+   Display Controls
+========================================== */
+
+.display-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.display-controls button {
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+/* ==========================================
+   Dark Mode
+========================================== */
+
+body.dark-mode {
+
+    background: #1e1e1e;
+
+    color: #f1f1f1;
+
+}
+
+
+body.dark-mode .card {
+
+    background: #2b2b2b;
+
+    color: #f1f1f1;
+
+}
+
+
+body.dark-mode input {
+
+    background: #3a3a3a;
+
+    color: #ffffff;
+
+    border-color: #666;
+
+}
+
+
+body.dark-mode input::placeholder {
+
+    color: #cccccc;
+
+}
+
+
+body.dark-mode #entrantTable th {
+
+    background: #3a3a3a;
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode #entrantTable td {
+
+    border-color: #555;
+
+}
+
+
+body.dark-mode #entrantTable tr:hover {
+
+    background: #3a3a3a;
+
+}
+
+
+body.dark-mode .winner-history-row {
+
+    border-color: #555;
+
+}
+
+
+body.dark-mode .winner-number {
+
+    background: #444;
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .winner-info span {
+
+    color: #cccccc;
+
+}
+
+/* ==========================================
+   Large Text Mode
+========================================== */
+
+body.large-text {
+
+    font-size: 18px;
+
+}
+
+
+/* Headings */
+
+body.large-text .header h1 {
+
+    font-size: 38px;
+
+}
+
+
+body.large-text .header h2 {
+
+    font-size: 22px;
+
+}
+
+
+body.large-text h3 {
+
+    font-size: 22px;
+
+}
+
+
+/* Labels */
+
+body.large-text label {
+
+    font-size: 18px;
+
+}
+
+
+/* Inputs */
+
+body.large-text input {
+
+    font-size: 18px;
+
+    padding: 16px;
+
+}
+
+
+/* Buttons */
+
+body.large-text button {
+
+    font-size: 18px;
+
+    padding: 15px 22px;
+
+}
+
+
+/* Main action buttons */
+
+body.large-text .enter-button {
+
+    font-size: 21px;
+
+    padding: 20px;
+
+}
+
+
+/* Dashboard statistics */
+
+body.large-text .card p {
+
+    font-size: 20px;
+
+}
+
+
+/* Entrant table */
+
+body.large-text #entrantTable th,
+body.large-text #entrantTable td {
+
+    font-size: 18px;
+
+    padding: 16px 12px;
+
+}
+
+
+/* Winner History */
+
+body.large-text .winner-info strong {
+
+    font-size: 20px;
+
+}
+
+
+body.large-text .winner-info span {
+
+    font-size: 17px;
+
+}
+
+
+/* Winner display */
+
+body.large-text #winnerDisplay h2 {
+
+    font-size: 32px;
+
+}
+
+
+/* Display controls */
+
+body.large-text .display-controls button {
+
+    font-size: 18px;
+
+    padding: 15px 22px;
+
+}
