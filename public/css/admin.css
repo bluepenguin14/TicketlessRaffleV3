@@ -972,3 +972,105 @@ body.dark-mode .qr-url {
     margin: 10px auto;
 
 }
+
+/* ==========================================
+   QR Print Button
+========================================== */
+
+#printQrButton {
+
+    max-width: 350px;
+
+    margin: 10px auto;
+
+}
+
+
+/* ==========================================
+   Printable QR Sign
+========================================== */
+
+@media print {
+
+    body * {
+
+        visibility: hidden;
+
+    }
+
+
+    #qrPrintArea,
+    #qrPrintArea * {
+
+        visibility: visible;
+
+    }
+
+
+    #qrPrintArea {
+
+        display: flex !important;
+        
+        position: absolute;
+
+        left: 0;
+
+        top: 0;
+
+        width: 100%;
+
+        min-height: 100vh;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        text-align: center;
+
+        background: white;
+
+        color: black;
+
+    }
+
+
+    #qrPrintArea h1 {
+
+        font-size: 42px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    #qrPrintArea h2 {
+
+        font-size: 30px;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    #qrPrintArea p {
+
+        font-size: 20px;
+
+        margin: 15px 0;
+
+    }
+
+
+    #qrPrintArea .qr-code {
+
+        padding: 20px;
+
+        border: 2px solid #000;
+
+    }
+
+}

@@ -1229,5 +1229,54 @@ if(downloadQrButton){
     );
 
 }
+// -----------------------------------------------
+// Print QR Sign
+// -----------------------------------------------
+
+const printQrButton =
+    document.getElementById(
+        "printQrButton"
+    );
+
+
+const qrPrintCode =
+    document.getElementById(
+        "qrPrintCode"
+    );
+
+
+if(qrPrintCode){
+
+    new QRCode(
+        qrPrintCode,
+        {
+            text: raffleUrl,
+
+            width: 500,
+
+            height: 500,
+
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
+    );
+
+}
+
+
+if(printQrButton){
+
+    printQrButton.addEventListener(
+        "click",
+
+        () => {
+
+            window.print();
+
+        }
+
+    );
+
+}
 
 
