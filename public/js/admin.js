@@ -1137,7 +1137,7 @@ largeTextButton.addEventListener(
 // -----------------------------------------------
 
 const raffleUrl =
-    "https://veterans-day.onrender.com";
+    "https://raffle-app-kjg2.onrender.com";
 
 
 const qrCodeContainer =
