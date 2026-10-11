@@ -58,7 +58,7 @@ router.post("/add",(req,res)=>{
 
                 email:req.body.email,
 
-                tickets:req.body.tickets
+                packagePrice:req.body.packagePrice
 
             });
 
@@ -306,72 +306,12 @@ router.post("/reset",(req,res)=>{
 // Dashboard statistics
 // -----------------------------------------------
 
-router.get("/stats",(req,res)=>{
-
-
+router.get("/stats", (req, res) => {
     try {
-
-
-        const entries =
-            raffleService.getEntries();
-
-
-        const winners =
-            raffleService.getWinners();
-
-
-
-        const totalTickets =
-            entries.reduce(
-
-                (sum,entry)=>
-                    sum + Number(entry.tickets || 0),
-
-                0
-
-            );
-
-
-
-        res.json({
-
-            success:true,
-
-            stats:{
-
-                entrants:
-                    entries.length,
-
-                totalTickets,
-
-                winners:
-                    winners.length
-
-            },
-
-            winnerHistory:
-                winners
-
-        });
-
-
-
+        res.json({ success: true, stats: raffleService.getStats(), winnerHistory: raffleService.getWinners() });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
     }
-    catch(error){
-
-
-        res.status(500).json({
-
-            success:false,
-
-            error:error.message
-
-        });
-
-
-    }
-
-
 });
 
 // -----------------------------------------------
@@ -464,9 +404,17 @@ router.put("/entrant/:id", (req, res) => {
 
         }
 
-        entrant.name = req.body.name.trim();
-        entrant.email = (req.body.email || "").trim();
-        entrant.tickets = Number(req.body.tickets);
+        const cleanName = String(req.body.name || "").trim();
+        if (!cleanName) {
+            return res.status(400).json({ success: false, error: "Name is required" });
+        }
+        const duplicate = data.entries.some(e => e.id !== entrant.id && String(e.name || "").trim().toLowerCase() === cleanName.toLowerCase());
+        if (duplicate) {
+            return res.status(400).json({ success: false, error: "Duplicate entrant" });
+        }
+        entrant.name = cleanName;
+        entrant.email = String(req.body.email || "").trim();
+        raffleService.updateEntrantPackage(entrant, req.body.packagePrice);
 
         saveData(data);
 

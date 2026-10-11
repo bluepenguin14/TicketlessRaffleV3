@@ -102,44 +102,13 @@
 
 
 
-            <label>
-                Number of Entries
-            </label>
-
-
-            <div class="ticket-control">
-
-
-                <button
-
-                    type="button"
-
-                    id="minus"
-
-                >
-                    -
-                </button>
-
-
-
-                <span id="ticketCount">
-                    1
-                </span>
-
-
-
-                <button
-
-                    type="button"
-
-                    id="plus"
-
-                >
-                    +
-                </button>
-
-
-            </div>
+            <label for="packagePrice">Choose Your Ticket Package</label>
+            <select id="packagePrice" required>
+                <option value="1">$1 — 1 ticket</option>
+                <option value="5">$5 — 6 tickets (Save $1)</option>
+                <option value="10">$10 — 20 tickets (Save $10)</option>
+            </select>
+            <p class="package-note">Half of the recorded proceeds go to the winner; half support our veterans.</p>
 
 
 

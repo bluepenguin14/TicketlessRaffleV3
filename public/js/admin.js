@@ -48,6 +48,11 @@ const totalTickets =
 
 const winnerCount =
     document.getElementById("winnerCount");
+const totalCollected = document.getElementById("totalCollected");
+const winnerShare = document.getElementById("winnerShare");
+const organizationShare = document.getElementById("organizationShare");
+const legacyAmountWarning = document.getElementById("legacyAmountWarning");
+const money = cents => `$${(Number(cents || 0) / 100).toFixed(2)}`;
 
 
 const winnerDisplay =
@@ -174,6 +179,16 @@ async function loadDashboard(){
 
             winnerCount.textContent =
                 result.stats.winners;
+            totalCollected.textContent = money(result.stats.totalCollectedCents);
+            winnerShare.textContent = money(result.stats.winnerShareCents);
+            organizationShare.textContent = money(result.stats.organizationShareCents);
+            if (result.stats.entriesMissingAmount > 0) {
+                legacyAmountWarning.style.display = "block";
+                legacyAmountWarning.textContent = `${result.stats.entriesMissingAmount} older entrant(s) have no recorded payment amount. They are excluded from the dollar totals until you edit them and select the package actually paid for.`;
+            } else {
+                legacyAmountWarning.style.display = "none";
+                legacyAmountWarning.textContent = "";
+            }
 
 
 
@@ -263,12 +278,7 @@ async()=>{
         .value;
 
 
-    const tickets =
-        Number(
-            document
-            .getElementById("adminTickets")
-            .value
-        );
+    const packagePrice = Number(document.getElementById("adminPackage").value);
 
 
 
@@ -293,7 +303,7 @@ async()=>{
 
                 email,
 
-                tickets
+                packagePrice
 
             })
         }
@@ -330,7 +340,7 @@ await loadEntrants();
     .value = "";
 
     document
-    .getElementById("adminTickets")
+    .getElementById("adminPackage")
     .value = "1";
 
 }
@@ -415,10 +425,10 @@ async()=>{
                 ${result.winner.name}
             </h2>
 
-            <p>
-                Winning Entries:
-                ${result.winner.tickets}
-            </p>
+            <p>Winning Entries: ${result.winner.tickets}</p>
+            <p>Total Collected: ${money(result.winner.totalCollectedCents)}</p>
+            <p>Winner's Half: ${money(result.winner.winnerShareCents)}</p>
+            <p>Veterans' Half: ${money(result.winner.organizationShareCents)}</p>
             `;
 
 
@@ -649,6 +659,8 @@ function renderEntrants(entrants) {
 
             <td>${entrant.tickets}</td>
 
+            <td>${Number.isInteger(entrant.amountPaidCents) ? money(entrant.amountPaidCents) : "Not recorded"}</td>
+
             <td>${new Date(
                 entrant.timestamp
             ).toLocaleString()}</td>
@@ -796,8 +808,13 @@ function openEditModal(entrant) {
     document.getElementById("editEmail").value =
         entrant.email || "";
 
-    document.getElementById("editTickets").value =
-        entrant.tickets;
+    const editPackage = document.getElementById("editPackage");
+    if (Number.isInteger(entrant.amountPaidCents)) {
+        editPackage.value = String(entrant.packagePrice || (entrant.tickets === 20 ? 10 : entrant.tickets === 6 ? 5 : 1));
+    } else {
+        // Do not guess the purchase amount for legacy entries.
+        editPackage.value = "";
+    }
 
     document.getElementById("editModal").style.display =
         "block";
@@ -819,10 +836,7 @@ async function saveEditedEntrant() {
     const email =
         document.getElementById("editEmail").value.trim();
 
-    const tickets =
-        Number(
-            document.getElementById("editTickets").value
-        );
+    const packagePrice = Number(document.getElementById("editPackage").value);
 
     try {
 
@@ -846,7 +860,7 @@ async function saveEditedEntrant() {
 
                     name,
                     email,
-                    tickets
+                    packagePrice
 
                 })
 

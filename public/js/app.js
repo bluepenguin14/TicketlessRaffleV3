@@ -1,315 +1,47 @@
-/*
-=================================================
- Ticketless Raffle v3
+/* Public raffle entry page */
+const raffleForm = document.getElementById("raffleForm");
+const message = document.getElementById("message");
+const entrantCount = document.getElementById("entrantCount");
+const totalTickets = document.getElementById("totalTickets");
+const packagePrice = document.getElementById("packagePrice");
 
- Public App JavaScript
-
- Responsibilities:
- - Handle raffle entry form
- - Control ticket quantity
- - Send data to backend API
- - Display messages
- - Load raffle statistics
-
-=================================================
-*/
-
-
-// -----------------------------------------------
-// Variables
-// -----------------------------------------------
-
-let ticketCount = 1;
-
-
-const form =
-    document.getElementById("raffleForm");
-
-
-const ticketsDisplay =
-    document.getElementById("ticketCount");
-
-
-const message =
-    document.getElementById("message");
-
-
-const entrantCount =
-    document.getElementById("entrantCount");
-
-
-const totalTickets =
-    document.getElementById("totalTickets");
-
-
-
-
-// -----------------------------------------------
-// Ticket buttons
-// -----------------------------------------------
-
-document
-.getElementById("plus")
-.addEventListener(
-    "click",
-    ()=>{
-
-
-        ticketCount++;
-
-
-        updateTicketDisplay();
-
-
+async function loadPublicStats() {
+  try {
+    const response = await fetch("/api/stats");
+    const result = await response.json();
+    if (result.success) {
+      entrantCount.textContent = result.stats.entrants;
+      totalTickets.textContent = result.stats.totalTickets;
     }
-);
-
-
-
-document
-.getElementById("minus")
-.addEventListener(
-    "click",
-    ()=>{
-
-
-        if(ticketCount > 1){
-
-            ticketCount--;
-
-        }
-
-
-        updateTicketDisplay();
-
-
-    }
-);
-
-
-
-
-
-function updateTicketDisplay(){
-
-
-    ticketsDisplay.textContent =
-        ticketCount;
-
-
+  } catch (error) { console.error("Unable to load raffle stats", error); }
 }
 
-
-
-
-
-
-// -----------------------------------------------
-// Submit raffle entry
-// -----------------------------------------------
-
-form.addEventListener(
-"submit",
-
-async(event)=>{
-
-
-    event.preventDefault();
-
-
-
-    const name =
-        document
-        .getElementById("name")
-        .value;
-
-
-
-    const email =
-        document
-        .getElementById("email")
-        .value;
-
-
-
-
-
-    const entry = {
-
-
-        name,
-
-        email,
-
-        tickets:
-            ticketCount
-
-
-    };
-
-
-
-
-    try {
-
-
-        const response =
-            await fetch(
-                "/api/enter",
-                {
-
-                    method:"POST",
-
-                    headers:{
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body:
-                        JSON.stringify(entry)
-
-                }
-
-            );
-
-
-
-        const result =
-            await response.json();
-
-
-
-
-
-        if(result.success){
-
-
-            message.textContent =
-                "Thank you! Your raffle entry has been received.";
-
-
-            message.className =
-                "success";
-
-
-
-            form.reset();
-
-
-
-            ticketCount = 1;
-
-
-            updateTicketDisplay();
-
-
-
-            loadStats();
-
-
-        }
-
-        else {
-
-
-            message.textContent =
-                result.error;
-
-
-            message.className =
-                "error";
-
-
-        }
-
-
-
-
-
-    }
-
-    catch(error){
-
-
-        console.error(error);
-
-
-        message.textContent =
-            "Unable to submit entry. Please try again.";
-
-
-        message.className =
-            "error";
-
-
-    }
-
-
+raffleForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const submitButton = raffleForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  message.textContent = "Submitting your entry…";
+  try {
+    const response = await fetch("/api/enter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        packagePrice: Number(packagePrice.value)
+      })
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || "Unable to enter the raffle.");
+    const dollars = Number(result.entrant.amountPaidCents || 0) / 100;
+    message.textContent = `Thank you! You are entered with ${result.entrant.tickets} ticket(s). Amount recorded: $${dollars.toFixed(2)}.`;
+    raffleForm.reset();
+    packagePrice.value = "1";
+    await loadPublicStats();
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    submitButton.disabled = false;
+  }
 });
-
-
-
-
-
-
-// -----------------------------------------------
-// Load raffle statistics
-// -----------------------------------------------
-
-async function loadStats(){
-
-
-    try {
-
-
-        const response =
-            await fetch(
-                "/api/stats"
-            );
-
-
-        const result =
-            await response.json();
-
-
-
-        if(result.success){
-
-
-            entrantCount.textContent =
-                result.stats.entrants;
-
-
-
-            totalTickets.textContent =
-                result.stats.totalTickets;
-
-
-        }
-
-
-
-    }
-
-    catch(error){
-
-
-        console.error(
-            "Stats error:",
-            error
-        );
-
-
-    }
-
-
-}
-
-
-
-
-// Load stats when page opens
-
-loadStats();
+loadPublicStats();

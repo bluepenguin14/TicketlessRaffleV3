@@ -223,6 +223,20 @@
 
     </div>
 
+    <div class="stat-card">
+        <div class="stat-title">Total Collected</div>
+        <div class="stat-number" id="totalCollected">$0.00</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-title">Winner's Half</div>
+        <div class="stat-number" id="winnerShare">$0.00</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-title">Veterans' Half</div>
+        <div class="stat-number" id="organizationShare">$0.00</div>
+    </div>
+    <p id="legacyAmountWarning" role="status" style="display:none;"></p>
+
 </div>
 
 </section>
@@ -314,16 +328,12 @@ id="addEntrantSection">
 
 
 
-<label>
-    Number of Entries
-</label>
-
-
-<input
-    id="adminTickets"
-    type="number"
-    value="1"
-    min="1">
+<label for="adminPackage">Ticket Package</label>
+<select id="adminPackage">
+    <option value="1">$1 — 1 ticket</option>
+    <option value="5">$5 — 6 tickets</option>
+    <option value="10">$10 — 20 tickets</option>
+</select>
 
 <button
 class="enter-button"
@@ -383,6 +393,7 @@ No winner drawn yet.
     <th>Name</th>
     <th>Email</th>
     <th>Entries</th>
+    <th>Amount Paid</th>
     <th>Date Added</th>
     <th>Edit</th>
     <th>Delete</th>
@@ -445,12 +456,14 @@ No winners yet.
             type="email"
             id="editEmail">
 
-        <label>Tickets</label>
-
-        <input
-            type="number"
-            id="editTickets"
-            min="1">
+        <label for="editPackage">Ticket Package</label>
+        <select id="editPackage" required>
+            <option value="" disabled selected>Select the package actually paid for</option>
+            <option value="1">$1 — 1 ticket</option>
+            <option value="5">$5 — 6 tickets</option>
+            <option value="10">$10 — 20 tickets</option>
+        </select>
+        <p>Choosing a package records its listed purchase amount. Use this to reconcile older entries only when you know what was paid.</p>
 
         <br><br>
 
