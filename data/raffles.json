@@ -1,4 +1,70 @@
 {
-  "entries": [],
-  "winners": []
+  "entries": [
+    {
+      "id": "fde98429-1909-4e34-b5b4-1fce8b8f6180",
+      "name": "Paula",
+      "email": "",
+      "tickets": 46,
+      "amountPaidCents": 2500,
+      "packageQuantities": {
+        "1": 0,
+        "5": 1,
+        "10": 2
+      },
+      "timestamp": "2026-11-09T20:27:20.048Z"
+    },
+    {
+      "id": "94f997d5-00dc-4ca4-941a-2827dce6f582",
+      "name": "PaulaW",
+      "email": "",
+      "tickets": 43,
+      "amountPaidCents": 2300,
+      "packageQuantities": {
+        "1": 3,
+        "5": 0,
+        "10": 2
+      },
+      "timestamp": "2026-11-09T20:39:23.154Z"
+    },
+    {
+      "id": "35726b65-1075-4fad-8a3d-0f9a7172a917",
+      "name": "Yo mamma2",
+      "email": "",
+      "tickets": 20,
+      "amountPaidCents": 1000,
+      "packageQuantities": {
+        "1": 0,
+        "5": 0,
+        "10": 1
+      },
+      "timestamp": "2026-11-09T20:39:33.452Z"
+    },
+    {
+      "id": "4622ce74-0ad4-4a7a-bb80-036bd39a472d",
+      "name": "Joes",
+      "email": "",
+      "tickets": 46,
+      "amountPaidCents": 2500,
+      "packageQuantities": {
+        "1": 0,
+        "5": 1,
+        "10": 2
+      },
+      "timestamp": "2026-11-09T20:47:35.184Z"
+    }
+  ],
+  "winners": [
+    {
+      "name": "PaulaW",
+      "tickets": 43,
+      "email": "",
+      "date": "2026-11-09T20:47:56.857Z",
+      "totalCollectedCents": 8300,
+      "winnerShareCents": 4150,
+      "organizationShareCents": 4150,
+      "totalCollected": 83,
+      "winnerShare": 41.5,
+      "organizationShare": 41.5
+    }
+  ]
 }

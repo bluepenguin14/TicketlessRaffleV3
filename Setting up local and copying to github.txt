@@ -1,0 +1,31 @@
+Create folders all on the c drive and all files on local
+
+Once done use the git commands (git status, git add . , git... and git push to push the files to Gitlab
+(set up the folders in Gitlab
+
+When testing on C drive do a CTRL-C to clear at the root of your project
+
+Then do a nmp start
+
+this gives you the local host link and then you can go test
+If you need help on errors on the local web link hit F12 on the page to see errors and line references
+
+
+
+
+
+When running locally:  (npm start) - from C:\Users\Owner\TicketlessRaffleV3 prompt) (CTL-c to clear first)
+
+http://localhost:3000/admin.html
+
+http://localhost:3000  (for user only and not admin)
+
+
+Admin PW login:  VeteranAdmin123
+
+
+
+
+
+***once done you will need to either add the new link to the Web Service in Render or create a new Web Service pointing to the new GitHub folder
+

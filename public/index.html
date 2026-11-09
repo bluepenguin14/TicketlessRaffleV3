@@ -102,13 +102,17 @@
 
 
 
-            <label for="packagePrice">Choose Your Ticket Package</label>
-            <select id="packagePrice" required>
-                <option value="1">$1 — 1 ticket</option>
-                <option value="5">$5 — 6 tickets (Save $1)</option>
-                <option value="10">$10 — 20 tickets (Save $10)</option>
-            </select>
-            <p class="package-note">Half of the recorded proceeds go to the winner; half support our veterans.</p>
+            <label>Choose quantities for each ticket package</label>
+            <div class="package-quantity">
+                <label for="qty1">$1 = 1 ticket</label>
+                <input id="qty1" type="number" min="0" max="1000" step="1" value="0">
+                <label for="qty5">$5 = 6 tickets</label>
+                <input id="qty5" type="number" min="0" max="1000" step="1" value="0">
+                <label for="qty10">$10 = 20 tickets</label>
+                <input id="qty10" type="number" min="0" max="1000" step="1" value="0">
+            </div>
+            <p id="orderSummary" class="package-note">Total: $10.00 for 20 tickets</p>
+            <p class="package-note">You may select more than one quantity of any package. Half of the recorded proceeds go to the winner; half support our veterans.</p>
 
 
 

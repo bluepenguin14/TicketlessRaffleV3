@@ -8,7 +8,8 @@ router.post("/enter", (req, res) => {
     const entrant = raffleService.addEntrant({
       name: req.body.name,
       email: req.body.email,
-      packagePrice: req.body.packagePrice
+      packagePrice: req.body.packagePrice,
+      packageQuantities: req.body.packageQuantities
     });
     res.json({ success: true, message: "Entry received", entrant });
   } catch (error) {

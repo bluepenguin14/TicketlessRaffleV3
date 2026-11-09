@@ -58,7 +58,9 @@ router.post("/add",(req,res)=>{
 
                 email:req.body.email,
 
-                packagePrice:req.body.packagePrice
+                packagePrice:req.body.packagePrice,
+
+                packageQuantities:req.body.packageQuantities
 
             });
 
@@ -412,9 +414,9 @@ router.put("/entrant/:id", (req, res) => {
         if (duplicate) {
             return res.status(400).json({ success: false, error: "Duplicate entrant" });
         }
+        raffleService.updateEntrantPackage(entrant, req.body.packagePrice, req.body.packageQuantities);
         entrant.name = cleanName;
         entrant.email = String(req.body.email || "").trim();
-        raffleService.updateEntrantPackage(entrant, req.body.packagePrice);
 
         saveData(data);
 
@@ -427,7 +429,7 @@ router.put("/entrant/:id", (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({
+        res.status(400).json({
 
             success: false,
             error: error.message

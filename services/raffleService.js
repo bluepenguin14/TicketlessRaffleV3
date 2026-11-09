@@ -32,6 +32,30 @@ function collectedCents(entries) {
 function missingPaymentCount(entries) {
   return entries.filter(entry => !Number.isInteger(entry.amountPaidCents) || entry.amountPaidCents < 0).length;
 }
+function normalizePackageQuantities(packageQuantities, packagePrice) {
+  // Backward compatibility for older clients that send one package selection.
+  if (!packageQuantities && packagePrice !== undefined) {
+    packageQuantities = { [String(Number(packagePrice))]: 1 };
+  }
+  if (!packageQuantities || typeof packageQuantities !== "object" || Array.isArray(packageQuantities)) {
+    throw new Error("Choose at least one ticket package.");
+  }
+  const normalized = { 1: 0, 5: 0, 10: 0 };
+  for (const price of [1, 5, 10]) {
+    const raw = packageQuantities[price] ?? 0;
+    const qty = Number(raw);
+    if (!Number.isInteger(qty) || qty < 0 || qty > 1000) {
+      throw new Error("Package quantities must be whole numbers between 0 and 1,000.");
+    }
+    normalized[price] = qty;
+  }
+  const totalPackages = normalized[1] + normalized[5] + normalized[10];
+  if (totalPackages < 1) throw new Error("Choose at least one ticket package.");
+  const tickets = normalized[1] + normalized[5] * 6 + normalized[10] * 20;
+  const amountPaidCents = normalized[1] * 100 + normalized[5] * 500 + normalized[10] * 1000;
+  return { packageQuantities: normalized, tickets, amountPaidCents };
+}
+
 function packageFor(packagePrice) {
   const key = Number(packagePrice);
   if (!Object.prototype.hasOwnProperty.call(PACKAGES, key)) {
@@ -40,26 +64,27 @@ function packageFor(packagePrice) {
   return { price: key, ...PACKAGES[key] };
 }
 
-function addEntrant({ name, email = "", packagePrice }) {
+function addEntrant({ name, email = "", packagePrice, packageQuantities }) {
   if (!String(name || "").trim()) throw new Error("Name is required");
-  const selected = packageFor(packagePrice);
+  const selected = normalizePackageQuantities(packageQuantities, packagePrice);
   const data = loadData();
   if (isDuplicate(name, data.entries)) throw new Error("Duplicate entrant");
   const entrant = {
     id: uuid(), name: String(name).trim(), email: String(email || "").trim(),
     tickets: selected.tickets, amountPaidCents: selected.amountPaidCents,
-    packagePrice: selected.price, timestamp: new Date().toISOString()
+    packageQuantities: selected.packageQuantities,
+    timestamp: new Date().toISOString()
   };
   data.entries.push(entrant);
   saveData(data);
   return entrant;
 }
 
-function updateEntrantPackage(entrant, packagePrice) {
-  const selected = packageFor(packagePrice);
+function updateEntrantPackage(entrant, packagePrice, packageQuantities) {
+  const selected = normalizePackageQuantities(packageQuantities, packagePrice);
   entrant.tickets = selected.tickets;
   entrant.amountPaidCents = selected.amountPaidCents;
-  entrant.packagePrice = selected.price;
+  entrant.packageQuantities = selected.packageQuantities;
   return entrant;
 }
 function getEntries() { return loadData().entries; }
@@ -101,4 +126,4 @@ function drawWinner() {
 }
 function getWinners() { return loadData().winners; }
 function resetRaffle() { const data = { entries: [], winners: [] }; saveData(data); return data; }
-module.exports = { addEntrant, updateEntrantPackage, getEntries, getStats, drawWinner, getWinners, resetRaffle, PACKAGES };
+module.exports = { addEntrant, updateEntrantPackage, getEntries, getStats, drawWinner, getWinners, resetRaffle, PACKAGES, normalizePackageQuantities };

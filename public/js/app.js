@@ -3,7 +3,24 @@ const raffleForm = document.getElementById("raffleForm");
 const message = document.getElementById("message");
 const entrantCount = document.getElementById("entrantCount");
 const totalTickets = document.getElementById("totalTickets");
-const packagePrice = document.getElementById("packagePrice");
+const quantityInputs = {
+  1: document.getElementById("qty1"),
+  5: document.getElementById("qty5"),
+  10: document.getElementById("qty10")
+};
+const orderSummary = document.getElementById("orderSummary");
+
+function selectedPackages() {
+  return Object.fromEntries(Object.entries(quantityInputs).map(([price, input]) => [price, Number(input.value || 0)]));
+}
+function updateOrderSummary() {
+  const quantities = selectedPackages();
+  const dollars = quantities[1] + quantities[5] * 5 + quantities[10] * 10;
+  const tickets = quantities[1] + quantities[5] * 6 + quantities[10] * 20;
+  orderSummary.textContent = `Total: $${dollars.toFixed(2)} for ${tickets} ticket(s)`;
+  return { quantities, dollars, tickets };
+}
+Object.values(quantityInputs).forEach(input => input.addEventListener("input", updateOrderSummary));
 
 async function loadPublicStats() {
   try {
@@ -18,6 +35,8 @@ async function loadPublicStats() {
 
 raffleForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  const { quantities, tickets } = updateOrderSummary();
+  if (!tickets) { message.textContent = "Please choose at least one ticket package."; return; }
   const submitButton = raffleForm.querySelector('button[type="submit"]');
   submitButton.disabled = true;
   message.textContent = "Submitting your entry…";
@@ -28,7 +47,7 @@ raffleForm.addEventListener("submit", async (event) => {
       body: JSON.stringify({
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim(),
-        packagePrice: Number(packagePrice.value)
+        packageQuantities: quantities
       })
     });
     const result = await response.json();
@@ -36,7 +55,10 @@ raffleForm.addEventListener("submit", async (event) => {
     const dollars = Number(result.entrant.amountPaidCents || 0) / 100;
     message.textContent = `Thank you! You are entered with ${result.entrant.tickets} ticket(s). Amount recorded: $${dollars.toFixed(2)}.`;
     raffleForm.reset();
-    packagePrice.value = "1";
+    quantityInputs[1].value = "0";
+    quantityInputs[5].value = "0";
+    quantityInputs[10].value = "0";
+    updateOrderSummary();
     await loadPublicStats();
   } catch (error) {
     message.textContent = error.message;
@@ -44,4 +66,5 @@ raffleForm.addEventListener("submit", async (event) => {
     submitButton.disabled = false;
   }
 });
+updateOrderSummary();
 loadPublicStats();

@@ -54,6 +54,23 @@ const organizationShare = document.getElementById("organizationShare");
 const legacyAmountWarning = document.getElementById("legacyAmountWarning");
 const money = cents => `$${(Number(cents || 0) / 100).toFixed(2)}`;
 
+// Keep the manual-entry total visible as package quantities change.
+function updateAdminOrderSummary() {
+    const qty1 = Number(document.getElementById("adminQty1").value || 0);
+    const qty5 = Number(document.getElementById("adminQty5").value || 0);
+    const qty10 = Number(document.getElementById("adminQty10").value || 0);
+    const totalCents = (qty1 * 100) + (qty5 * 500) + (qty10 * 1000);
+    const tickets = qty1 + (qty5 * 6) + (qty10 * 20);
+    const summary = document.getElementById("adminOrderSummary");
+    if (summary) summary.textContent = `Total: ${money(totalCents)} for ${tickets} ticket(s)`;
+}
+
+["adminQty1", "adminQty5", "adminQty10"].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.addEventListener("input", updateAdminOrderSummary);
+});
+updateAdminOrderSummary();
+
 
 const winnerDisplay =
     document.getElementById("winnerDisplay");
@@ -278,9 +295,23 @@ async()=>{
         .value;
 
 
-    const packagePrice = Number(document.getElementById("adminPackage").value);
+    const packageQuantities = {
+        1: Number(document.getElementById("adminQty1").value || 0),
+        5: Number(document.getElementById("adminQty5").value || 0),
+        10: Number(document.getElementById("adminQty10").value || 0)
+    };
 
 
+
+    if (!name.trim()) {
+        message.textContent = "Please enter the entrant's name.";
+        return;
+    }
+    if (![packageQuantities[1], packageQuantities[5], packageQuantities[10]].every(q => Number.isInteger(q) && q >= 0 && q <= 1000) ||
+        (packageQuantities[1] + packageQuantities[5] + packageQuantities[10] === 0)) {
+        message.textContent = "Enter a quantity of at least 1 in one package (0 is fine for the others).";
+        return;
+    }
 
     try {
 
@@ -303,7 +334,7 @@ async()=>{
 
                 email,
 
-                packagePrice
+                packageQuantities
 
             })
         }
@@ -339,9 +370,10 @@ await loadEntrants();
     .getElementById("adminEmail")
     .value = "";
 
-    document
-    .getElementById("adminPackage")
-    .value = "1";
+    document.getElementById("adminQty1").value = "0";
+    document.getElementById("adminQty5").value = "0";
+    document.getElementById("adminQty10").value = "1";
+    updateAdminOrderSummary();
 
 }
         
@@ -808,16 +840,17 @@ function openEditModal(entrant) {
     document.getElementById("editEmail").value =
         entrant.email || "";
 
-    const editPackage = document.getElementById("editPackage");
-    if (Number.isInteger(entrant.amountPaidCents)) {
-        editPackage.value = String(entrant.packagePrice || (entrant.tickets === 20 ? 10 : entrant.tickets === 6 ? 5 : 1));
-    } else {
-        // Do not guess the purchase amount for legacy entries.
-        editPackage.value = "";
-    }
+    const quantities = entrant.packageQuantities || (
+        Number.isInteger(entrant.amountPaidCents) && [1, 5, 10].includes(Number(entrant.packagePrice))
+            ? { [Number(entrant.packagePrice)]: 1 }
+            : {}
+    );
+    // Never infer a payment package for older records without recorded payment details.
+    document.getElementById("editQty1").value = quantities[1] ?? 0;
+    document.getElementById("editQty5").value = quantities[5] ?? 0;
+    document.getElementById("editQty10").value = quantities[10] ?? 0;
 
-    document.getElementById("editModal").style.display =
-        "block";
+    document.getElementById("editModal").style.display = "flex";
 
 }
 
@@ -836,7 +869,11 @@ async function saveEditedEntrant() {
     const email =
         document.getElementById("editEmail").value.trim();
 
-    const packagePrice = Number(document.getElementById("editPackage").value);
+    const packageQuantities = {
+        1: Number(document.getElementById("editQty1").value || 0),
+        5: Number(document.getElementById("editQty5").value || 0),
+        10: Number(document.getElementById("editQty10").value || 0)
+    };
 
     try {
 
@@ -860,7 +897,7 @@ async function saveEditedEntrant() {
 
                     name,
                     email,
-                    packagePrice
+                    packageQuantities
 
                 })
 

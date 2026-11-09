@@ -357,3 +357,22 @@ footer {
 
 
 }
+
+
+/* Multiple ticket package quantities */
+.package-quantity {
+    display: grid;
+    grid-template-columns: 1fr minmax(90px, 120px);
+    gap: 10px 14px;
+    align-items: center;
+    margin: 12px 0;
+}
+.package-quantity input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 18px;
+}
+.package-note {
+    line-height: 1.5;
+}
